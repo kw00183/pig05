@@ -69,13 +69,13 @@ public class PigHelpDialog {
 		message.getButtonTypes().setAll(btnYes, btnNo);
 
 		Optional<ButtonType> result = message.showAndWait();
-		
+
 		if (result.get() == btnYes) {
 			this.setShouldShowHelpDialog(true);
 		} else if (result.get() == btnNo) {
 			this.setShouldShowHelpDialog(false);
 		}
-		
+
 		return this.getShouldShowHelpDialog();
 	}
 }
