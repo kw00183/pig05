@@ -80,25 +80,13 @@ public class PigMenuBar {
 
 		ToggleGroup tglStrategy = new ToggleGroup();
 
-		RadioMenuItem mnuCautious = new RadioMenuItem("_Cautious");
-		mnuCautious.setAccelerator(new KeyCodeCombination(KeyCode.C,
-				KeyCombination.SHORTCUT_DOWN));
-		mnuCautious.setOnAction(new CautiousStrategyListener());
-		mnuCautious.setMnemonicParsing(true);
+		RadioMenuItem mnuCautious = this.addStrategyItem("_Cautious", KeyCode.C, "cautious");
 		mnuCautious.setToggleGroup(tglStrategy);
 
-		RadioMenuItem mnuGreedy = new RadioMenuItem("Gr_eedy");
-		mnuGreedy.setAccelerator(new KeyCodeCombination(KeyCode.E,
-				KeyCombination.SHORTCUT_DOWN));
-		mnuGreedy.setOnAction(new GreedyStrategyListener());
-		mnuGreedy.setMnemonicParsing(true);
+		RadioMenuItem mnuGreedy = this.addStrategyItem("Gr_eedy", KeyCode.E, "greedy");
 		mnuGreedy.setToggleGroup(tglStrategy);
-
-		RadioMenuItem mnuRandom = new RadioMenuItem("_Random");
-		mnuRandom.setAccelerator(new KeyCodeCombination(KeyCode.R,
-				KeyCombination.SHORTCUT_DOWN));
-		mnuRandom.setOnAction(new RandomStrategyListener());
-		mnuRandom.setMnemonicParsing(true);
+		
+		RadioMenuItem mnuRandom = this.addStrategyItem("_Random", KeyCode.R, "random");
 		mnuRandom.setToggleGroup(tglStrategy);
 
 		PigStrategy currentStrategy = this.theGame.getComputerPlayer()
@@ -113,6 +101,22 @@ public class PigMenuBar {
 
 		mnuSettings.getItems().addAll(mnuCautious, mnuGreedy, mnuRandom);
 		return mnuSettings;
+	}
+	
+	private RadioMenuItem addStrategyItem(String menuText, KeyCode key, String strategy) {
+		RadioMenuItem mnuStrategy = new RadioMenuItem(menuText);
+		mnuStrategy.setAccelerator(new KeyCodeCombination(key,
+				KeyCombination.SHORTCUT_DOWN));
+		
+		if (strategy.equals("cautious")) {
+			mnuStrategy.setOnAction(new CautiousStrategyListener());
+		} else if (strategy.equals("random")) {
+			mnuStrategy.setOnAction(new RandomStrategyListener());
+		} else {
+			mnuStrategy.setOnAction(new GreedyStrategyListener());
+		}
+		mnuStrategy.setMnemonicParsing(true);
+		return mnuStrategy;
 	}
 
 	private Menu createGameMenu() {
