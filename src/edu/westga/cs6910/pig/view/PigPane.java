@@ -2,26 +2,12 @@ package edu.westga.cs6910.pig.view;
 
 import edu.westga.cs6910.pig.model.Game;
 import edu.westga.cs6910.pig.model.Player;
-import edu.westga.cs6910.pig.model.strategies.CautiousStrategy;
-import edu.westga.cs6910.pig.model.strategies.GreedyStrategy;
-import edu.westga.cs6910.pig.model.strategies.PigStrategy;
-import edu.westga.cs6910.pig.model.strategies.RandomStrategy;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -42,6 +28,7 @@ public class PigPane extends BorderPane {
 	private StatusPane pnGameInfo;
 	private NewGamePane pnChooseFirstPlayer;
 	private PigHelpDialog helpDialog;
+	private PigMenuBar menuBar;
 
 	/**
 	 * Creates a pane object to provide the view for the specified Game model
@@ -58,15 +45,19 @@ public class PigPane extends BorderPane {
 			throw new IllegalArgumentException("Invalid game");
 		}
 		this.theGame = theGame;
-
+		
 		this.helpDialog = new PigHelpDialog();
 		this.helpDialog.showHelpDialog();
 		this.pnContent = new BorderPane();
 
-		this.createMenu();
+		this.menuBar = new PigMenuBar(this.theGame, this, this.helpDialog);
+		VBox menuBox = this.menuBar.createMenu();
 
 		this.pnChooseFirstPlayer = new NewGamePane(theGame);
-		HBox topBox = this.createHBoxHolder(this.pnChooseFirstPlayer, false);
+		HBox playerBox = this.createHBoxHolder(this.pnChooseFirstPlayer, false);
+
+		VBox topBox = new VBox();
+		topBox.getChildren().addAll(menuBox, playerBox);
 		this.pnContent.setTop(topBox);
 
 		this.pnHumanPlayer = new HumanPane(theGame);
@@ -93,150 +84,23 @@ public class PigPane extends BorderPane {
 		return leftBox;
 	}
 
-	private void createMenu() {
-		VBox vbxMenuHolder = new VBox();
+	/**
+	 * Defines the functions needed to reset the panes
+	 */
+	public void resetPanes() {
+		PigPane.this.pnChooseFirstPlayer.reset();
+		PigPane.this.pnChooseFirstPlayer.setDisable(false);
+		PigPane.this.pnHumanPlayer.setDisable(true);
+		PigPane.this.pnComputerPlayer.setDisable(true);
 
-		MenuBar mnuMain = new MenuBar();
-
-		Menu mnuFile = this.createGameMenu();
-
-		Menu mnuSettings = this.createStrategyMenu();
-
-		Menu mnuHelp = this.createHelpMenu();
-
-		mnuMain.getMenus().addAll(mnuFile, mnuSettings, mnuHelp);
-		vbxMenuHolder.getChildren().addAll(mnuMain);
-		this.setTop(vbxMenuHolder);
-	}
-
-	private Menu createStrategyMenu() {
-		Menu mnuSettings = new Menu("_Strategy");
-		mnuSettings.setMnemonicParsing(true);
-
-		ToggleGroup tglStrategy = new ToggleGroup();
-
-		RadioMenuItem mnuCautious = new RadioMenuItem("_Cautious");
-		mnuCautious.setAccelerator(new KeyCodeCombination(KeyCode.C,
-				KeyCombination.SHORTCUT_DOWN));
-		mnuCautious.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
-				PigPane.this.theGame.getComputerPlayer()
-						.setStrategy(new CautiousStrategy());
-			}
-		});
-		mnuCautious.setMnemonicParsing(true);
-		mnuCautious.setToggleGroup(tglStrategy);
-
-		RadioMenuItem mnuGreedy = new RadioMenuItem("Gr_eedy");
-		mnuGreedy.setAccelerator(new KeyCodeCombination(KeyCode.E,
-				KeyCombination.SHORTCUT_DOWN));
-		mnuGreedy.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
-				PigPane.this.theGame.getComputerPlayer()
-						.setStrategy(new GreedyStrategy());
-			}
-		});
-		mnuGreedy.setMnemonicParsing(true);
-		mnuGreedy.setToggleGroup(tglStrategy);
-
-		RadioMenuItem mnuRandom = new RadioMenuItem("_Random");
-		mnuRandom.setAccelerator(new KeyCodeCombination(KeyCode.R,
-				KeyCombination.SHORTCUT_DOWN));
-		mnuRandom.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
-				PigPane.this.theGame.getComputerPlayer()
-						.setStrategy(new RandomStrategy());
-			}
-		});
-		mnuRandom.setMnemonicParsing(true);
-		mnuRandom.setToggleGroup(tglStrategy);
-
-		PigStrategy currentStrategy = this.theGame.getComputerPlayer()
-				.getStrategy();
-		if (currentStrategy.getClass() == CautiousStrategy.class) {
-			mnuCautious.setSelected(true);
-		} else if (currentStrategy.getClass() == RandomStrategy.class) {
-			mnuRandom.setSelected(true);
-		} else {
-			mnuGreedy.setSelected(true);
+		if (PigPane.this.helpDialog.getShouldShowHelpDialog()) {
+			PigPane.this.helpDialog.showHelpDialog();
 		}
 
-		mnuSettings.getItems().addAll(mnuCautious, mnuGreedy, mnuRandom);
-		return mnuSettings;
-	}
-
-	private Menu createGameMenu() {
-		Menu mnuGame = new Menu("_Game");
-		mnuGame.setMnemonicParsing(true);
-
-		MenuItem mnuNew = new MenuItem("_New");
-		mnuNew.setMnemonicParsing(true);
-		mnuNew.setAccelerator(new KeyCodeCombination(KeyCode.N,
-				KeyCombination.SHORTCUT_DOWN));
-		mnuNew.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				PigPane.this.pnChooseFirstPlayer.reset();
-				PigPane.this.pnChooseFirstPlayer.setDisable(false);
-				PigPane.this.pnHumanPlayer.setDisable(true);
-				PigPane.this.pnComputerPlayer.setDisable(true);
-				if (PigPane.this.helpDialog.getShouldShowHelpDialog()) {
-					PigPane.this.helpDialog.showHelpDialog();
-				}
-				PigPane.this.theGame.resetGame();
-				PigPane.this.pnGameInfo.clearInformation();
-				PigPane.this.pnHumanPlayer.clearInformation();
-				PigPane.this.pnComputerPlayer.clearInformation();
-			}
-		});
-
-		MenuItem mnuExit = new MenuItem("E_xit");
-		mnuExit.setMnemonicParsing(true);
-		mnuExit.setAccelerator(new KeyCodeCombination(KeyCode.X,
-				KeyCombination.SHORTCUT_DOWN));
-		mnuExit.setOnAction(event -> System.exit(0));
-
-		mnuGame.getItems().addAll(mnuNew, mnuExit);
-		return mnuGame;
-	}
-
-	private Menu createHelpMenu() {
-		Menu mnuHelp = new Menu("_Help");
-		mnuHelp.setMnemonicParsing(true);
-
-		MenuItem mnuHelpContent = new MenuItem("Hel_p Contents");
-		mnuHelpContent.setMnemonicParsing(true);
-		mnuHelpContent.setAccelerator(new KeyCodeCombination(KeyCode.P,
-				KeyCombination.SHORTCUT_DOWN));
-		mnuHelpContent.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				PigPane.this.helpDialog.setShouldShowHelpDialog(true);
-				PigPane.this.helpDialog.showHelpDialog();
-			}
-		});
-
-		MenuItem mnuAbout = new MenuItem("_About");
-		mnuAbout.setMnemonicParsing(true);
-		mnuAbout.setAccelerator(new KeyCodeCombination(KeyCode.A,
-				KeyCombination.SHORTCUT_DOWN));
-		mnuAbout.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				String aboutContent = "Creation Date: July 5, 2021\n"
-						+ "Authors: cs6910, Kim Weible";
-				Alert aboutMessage = new Alert(AlertType.NONE, aboutContent,
-						ButtonType.OK);
-				aboutMessage.setTitle("About");
-				aboutMessage.show();
-			}
-		});
-
-		mnuHelp.getItems().addAll(mnuHelpContent, mnuAbout);
-		return mnuHelp;
+		PigPane.this.theGame.resetGame();
+		PigPane.this.pnGameInfo.clearInformation();
+		PigPane.this.pnHumanPlayer.clearInformation();
+		PigPane.this.pnComputerPlayer.clearInformation();
 	}
 
 	/**
