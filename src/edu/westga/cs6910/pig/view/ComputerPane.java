@@ -16,7 +16,9 @@ import javafx.scene.layout.Pane;
  * Defines the pane that lets the user either roll or hold during
  * 	their turn
  * This class was started by CS6910
- * 
+ 
+ * @author CS6910, Kim Weible
+ * @version Summer 2021
  */
 public class ComputerPane extends GridPane implements InvalidationListener {
 	private Game theGame;
