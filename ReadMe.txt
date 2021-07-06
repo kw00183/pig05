@@ -3,3 +3,4 @@
 3. I made the assumption that I should pass control of not only the game but the pane to tie access to different methods that were specific to instance variables and methods encapsulated/specific to those classes.
 4. I made the assumption that I should create special methods in the FullPigPane class to manage the pane objects that were accessible to other classes but should be encapsulated to this class: showHumanPane, showComputerPane, ShowPlayerPane, updateGameInfo, and resetPanes.
 5. I made the assumption that the PigPane should just reference the FullPigPane, and it should no longer house any instance variables beyond the Game itself.
+6. I made an assumption that the About in the menu should be an alert.
