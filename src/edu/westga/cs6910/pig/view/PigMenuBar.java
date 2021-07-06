@@ -29,7 +29,7 @@ import javafx.scene.layout.VBox;
  */
 public class PigMenuBar {
 	private Game theGame;
-	private PigPane thePane;
+	private FullPigPane thePane;
 	private PigHelpDialog helpDialog;
 
 	/**
@@ -44,7 +44,8 @@ public class PigMenuBar {
 	 * 
 	 * @requires theGame != null, thePane != null, helpDialog != null
 	 */
-	public PigMenuBar(Game theGame, PigPane thePane, PigHelpDialog helpDialog) {
+	public PigMenuBar(Game theGame, FullPigPane thePane,
+			PigHelpDialog helpDialog) {
 		if (theGame == null || thePane == null || helpDialog == null) {
 			throw new IllegalArgumentException("Invalid game");
 		}
@@ -228,7 +229,7 @@ public class PigMenuBar {
 	}
 
 	/*
-	 * Defines the listener for the help about manu
+	 * Defines the listener for the help about menu
 	 */
 	private class HelpAboutListener implements EventHandler<ActionEvent> {
 		/*
