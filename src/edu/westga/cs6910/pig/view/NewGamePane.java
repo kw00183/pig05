@@ -24,7 +24,7 @@ public class NewGamePane extends GridPane {
 	private ComboBox<Integer> cmbGoalScore;
 
 	private Game theGame;
-	private PigPane thePane;
+	private FullPigPane thePane;
 	private Player theHuman;
 	private Player theComputer;
 
@@ -39,7 +39,7 @@ public class NewGamePane extends GridPane {
 	 * 
 	 * @requires theGame != null
 	 */
-	public NewGamePane(Game theGame, PigPane thePane) {
+	public NewGamePane(Game theGame, FullPigPane thePane) {
 		if (theGame == null || thePane == null) {
 			throw new IllegalArgumentException("Invalid game");
 		}
