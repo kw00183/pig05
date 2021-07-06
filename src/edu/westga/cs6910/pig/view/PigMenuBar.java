@@ -42,7 +42,7 @@ public class PigMenuBar {
 	 * @param helpDialog
 	 *            the helpDialog object
 	 * 
-	 * @requires theGame != null
+	 * @requires theGame != null, thePane != null, helpDialog != null
 	 */
 	public PigMenuBar(Game theGame, PigPane thePane, PigHelpDialog helpDialog) {
 		if (theGame == null || thePane == null || helpDialog == null) {
@@ -80,13 +80,16 @@ public class PigMenuBar {
 
 		ToggleGroup tglStrategy = new ToggleGroup();
 
-		RadioMenuItem mnuCautious = this.addStrategyItem("_Cautious", KeyCode.C, "cautious");
+		RadioMenuItem mnuCautious = this.addStrategyItem("_Cautious", KeyCode.C,
+				"cautious");
 		mnuCautious.setToggleGroup(tglStrategy);
 
-		RadioMenuItem mnuGreedy = this.addStrategyItem("Gr_eedy", KeyCode.E, "greedy");
+		RadioMenuItem mnuGreedy = this.addStrategyItem("Gr_eedy", KeyCode.E,
+				"greedy");
 		mnuGreedy.setToggleGroup(tglStrategy);
-		
-		RadioMenuItem mnuRandom = this.addStrategyItem("_Random", KeyCode.R, "random");
+
+		RadioMenuItem mnuRandom = this.addStrategyItem("_Random", KeyCode.R,
+				"random");
 		mnuRandom.setToggleGroup(tglStrategy);
 
 		PigStrategy currentStrategy = this.theGame.getComputerPlayer()
@@ -102,12 +105,13 @@ public class PigMenuBar {
 		mnuSettings.getItems().addAll(mnuCautious, mnuGreedy, mnuRandom);
 		return mnuSettings;
 	}
-	
-	private RadioMenuItem addStrategyItem(String menuText, KeyCode key, String strategy) {
+
+	private RadioMenuItem addStrategyItem(String menuText, KeyCode key,
+			String strategy) {
 		RadioMenuItem mnuStrategy = new RadioMenuItem(menuText);
-		mnuStrategy.setAccelerator(new KeyCodeCombination(key,
-				KeyCombination.SHORTCUT_DOWN));
-		
+		mnuStrategy.setAccelerator(
+				new KeyCodeCombination(key, KeyCombination.SHORTCUT_DOWN));
+
 		if (strategy.equals("cautious")) {
 			mnuStrategy.setOnAction(new CautiousStrategyListener());
 		} else if (strategy.equals("random")) {
