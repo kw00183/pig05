@@ -44,8 +44,15 @@ public class PigHelpDialog {
 		this.shouldShowHelpDialog = shouldShowHelpDialog;
 	}
 
-	protected boolean showHelpDialog() {
+	/**
+	 * Determines if the Help Dialog should show or not, based on the explicit
+	 * button selection
+	 * 
+	 * @return boolean should the help dialog show on new game
+	 */
+	public boolean showHelpDialog() {
 		if (!this.getShouldShowHelpDialog()) {
+			this.setShouldShowHelpDialog(false);
 			return false;
 		}
 
@@ -72,10 +79,9 @@ public class PigHelpDialog {
 
 		if (result.get() == btnYes) {
 			this.setShouldShowHelpDialog(true);
-		} else if (result.get() == btnNo) {
+		} else {
 			this.setShouldShowHelpDialog(false);
 		}
-
 		return this.getShouldShowHelpDialog();
 	}
 }
