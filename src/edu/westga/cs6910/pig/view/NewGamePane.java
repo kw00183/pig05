@@ -37,7 +37,7 @@ public class NewGamePane extends GridPane {
 	 * @param thePane
 	 *            the pig pane object
 	 * 
-	 * @requires theGame != null
+	 * @requires theGame != null, thePane != null
 	 */
 	public NewGamePane(Game theGame, FullPigPane thePane) {
 		if (theGame == null || thePane == null) {
@@ -62,6 +62,9 @@ public class NewGamePane extends GridPane {
 		this.reset();
 	}
 
+	/**
+	 * Creates the label and radio buttons for players
+	 */
 	private void createFirstPlayerItems() {
 		Label lblFirstPlayer = new Label("Who plays first? ");
 		this.add(lblFirstPlayer, 2, 0);
@@ -87,6 +90,9 @@ public class NewGamePane extends GridPane {
 		this.add(this.radRandomPlayer, 5, 0);
 	}
 
+	/**
+	 * Creates the label and combo box for the goal score
+	 */
 	private void createGoalScoreItems() {
 		Label lblGoalScore = new Label("Initial Goal Score: ");
 		this.add(lblGoalScore, 0, 0);
@@ -120,11 +126,11 @@ public class NewGamePane extends GridPane {
 	 * Defines the listener for computer player first button.
 	 */
 	private class RandomFirstListener implements EventHandler<ActionEvent> {
-		@Override
 		/**
 		 * Enables the ComputerPlayerPanel and starts a new game. Event handler
 		 * for a click in the computerPlayerButton.
 		 */
+		@Override
 		public void handle(ActionEvent arg0) {
 			int goalScore = NewGamePane.this.cmbGoalScore.getValue();
 
@@ -132,8 +138,8 @@ public class NewGamePane extends GridPane {
 
 			if (Math.random() * 10 <= 4) {
 				NewGamePane.this.thePane.showComputerPane(false);
-				NewGamePane.this.theGame.startNewGame(NewGamePane.this.theComputer,
-						goalScore);
+				NewGamePane.this.theGame
+						.startNewGame(NewGamePane.this.theComputer, goalScore);
 			} else {
 				NewGamePane.this.thePane.showHumanPane(false);
 				NewGamePane.this.theGame.startNewGame(NewGamePane.this.theHuman,
@@ -146,11 +152,11 @@ public class NewGamePane extends GridPane {
 	 * Defines the listener for computer player first button.
 	 */
 	private class ComputerFirstListener implements EventHandler<ActionEvent> {
-		@Override
 		/**
 		 * Enables the ComputerPlayerPanel and starts a new game. Event handler
 		 * for a click in the computerPlayerButton.
 		 */
+		@Override
 		public void handle(ActionEvent arg0) {
 			int goalScore = NewGamePane.this.cmbGoalScore.getValue();
 
