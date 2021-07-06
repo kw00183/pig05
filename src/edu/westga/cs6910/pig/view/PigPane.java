@@ -11,10 +11,10 @@ import javafx.scene.layout.BorderPane;
  */
 public class PigPane extends BorderPane {
 	private Game theGame;
-	
+
 	/**
-	 * Creates a BorderPane object to provide the view for the specified Game model
-	 * object.
+	 * Creates a BorderPane object to provide the view for the specified Game
+	 * model object.
 	 * 
 	 * @param theGame
 	 *            the domain model object representing the Pig game
@@ -27,9 +27,9 @@ public class PigPane extends BorderPane {
 			throw new IllegalArgumentException("Invalid game");
 		}
 		this.theGame = theGame;
-		
+
 		BorderPane theFullPane = new FullPigPane(this.theGame);
-		
+
 		this.setCenter(theFullPane);
 	}
 }
