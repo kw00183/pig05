@@ -1,0 +1,5 @@
+1. I made the assumption that I needed to add getters and setters to the PigHelpDialog class to help manage the control of when the help dialog alert would show, and these would need to be controlled by other classes.
+2. I made the assumption that it was better to have inner classes to manage the actions required of the menu selections in the PigMenuBar class, so they were more organized and the methods were simpler. Also, this allowed me to access the other classes to reset panes or control other pane actions needed.
+3. I made the assumption that I should pass control of not only the game but the pane to tie access to different methods that were specific to instance variables and methods encapsulated/specific to those classes.
+4. I made the assumption that I should create special methods in the FullPigPane class to manage the pane objects that were accessible to other classes but should be encapsulated to this class: showHumanPane, showComputerPane, ShowPlayerPane, updateGameInfo, and resetPanes.
+5. I made the assumption that the PigPane should just reference the FullPigPane, and it should no longer house any instance variables beyond the Game itself.
