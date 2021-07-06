@@ -21,7 +21,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.VBox;
 
 /**
- * Defines the class that manages the pig menu bar
+ * Defines the class that manages the pig game menu bar
  * 
  * @author Kim Weible
  * @version Summer 2021
@@ -75,6 +75,11 @@ public class PigMenuBar {
 		return vbxMenuHolder;
 	}
 
+	/**
+	 * Defines the computer strategy menu items of cautious, greedy and random
+	 * 
+	 * @return mnuSettings the menu object containing the strategy menu items
+	 */
 	private Menu createStrategyMenu() {
 		Menu mnuSettings = new Menu("_Strategy");
 		mnuSettings.setMnemonicParsing(true);
@@ -107,6 +112,12 @@ public class PigMenuBar {
 		return mnuSettings;
 	}
 
+	/**
+	 * Defines the radio menu items of the computer strategy for cautious,
+	 * greedy and random
+	 * 
+	 * @return mnuStrategy the radio menu items for the strategies
+	 */
 	private RadioMenuItem addStrategyItem(String menuText, KeyCode key,
 			String strategy) {
 		RadioMenuItem mnuStrategy = new RadioMenuItem(menuText);
@@ -124,6 +135,11 @@ public class PigMenuBar {
 		return mnuStrategy;
 	}
 
+	/**
+	 * Defines the game menu with options to start new game or exit application
+	 * 
+	 * @return mnuGame the game menu
+	 */
 	private Menu createGameMenu() {
 		Menu mnuGame = new Menu("_Game");
 		mnuGame.setMnemonicParsing(true);
@@ -132,13 +148,7 @@ public class PigMenuBar {
 		mnuNew.setMnemonicParsing(true);
 		mnuNew.setAccelerator(new KeyCodeCombination(KeyCode.N,
 				KeyCombination.SHORTCUT_DOWN));
-		mnuNew.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent arg0) {
-				PigMenuBar.this.thePane.resetPanes();
-			}
-		});
+		mnuNew.setOnAction(new NewGameListener());
 
 		MenuItem mnuExit = new MenuItem("E_xit");
 		mnuExit.setMnemonicParsing(true);
@@ -150,6 +160,12 @@ public class PigMenuBar {
 		return mnuGame;
 	}
 
+	/**
+	 * Defines the help menu with options to show the help content or about
+	 * information
+	 * 
+	 * @return mnuHelp the help menu
+	 */
 	private Menu createHelpMenu() {
 		Menu mnuHelp = new Menu("_Help");
 		mnuHelp.setMnemonicParsing(true);
@@ -215,11 +231,24 @@ public class PigMenuBar {
 	}
 
 	/*
+	 * Defines the listener for starting a new game
+	 */
+	private class NewGameListener implements EventHandler<ActionEvent> {
+		/*
+		 * Sets the actions needed to start the new game
+		 */
+		@Override
+		public void handle(ActionEvent event) {
+			PigMenuBar.this.thePane.resetPanes();
+		}
+	}
+
+	/*
 	 * Defines the listener for the help dialog menu
 	 */
 	private class HelpContentsListener implements EventHandler<ActionEvent> {
 		/*
-		 * Sets the help dialog menu
+		 * Sets the actions needed to show the help dialog alert
 		 */
 		@Override
 		public void handle(ActionEvent event) {
@@ -233,7 +262,7 @@ public class PigMenuBar {
 	 */
 	private class HelpAboutListener implements EventHandler<ActionEvent> {
 		/*
-		 * Sets the help about menu
+		 * Sets the actions needed to show the about information alert
 		 */
 		@Override
 		public void handle(ActionEvent event) {
