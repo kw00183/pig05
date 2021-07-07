@@ -19,10 +19,10 @@ import javafx.scene.layout.Pane;
  * @version Summer 2021
  */
 public class HumanPane extends GridPane implements InvalidationListener {
-	private Button btnRoll;
-	private Button btnHold;
-	private Label lblTurnTotal;
-	private Label lblDiceValues;
+	private Button buttonRoll;
+	private Button buttonHold;
+	private Label labelTurnTotal;
+	private Label labelDiceValues;
 
 	private HumanPlayer theHuman;
 	private Game theGame;
@@ -49,28 +49,28 @@ public class HumanPane extends GridPane implements InvalidationListener {
 	}
 
 	private void buildPane() {
-		Label lblTitle = new Label("~~ " + this.theHuman.getName() + " ~~");
-		this.add(lblTitle, 0, 0);
+		Label labelTitle = new Label("~~ " + this.theHuman.getName() + " ~~");
+		this.add(labelTitle, 0, 0);
 
 		this.add(new Label("Turn Total: "), 0, 1);
-		this.lblTurnTotal = new Label("0");
-		this.add(this.lblTurnTotal, 1, 1);
+		this.labelTurnTotal = new Label("0");
+		this.add(this.labelTurnTotal, 1, 1);
 
 		this.add(new Label("Dice Values: "), 0, 2);
-		this.lblDiceValues = new Label("");
-		this.add(this.lblDiceValues, 1, 2);
+		this.labelDiceValues = new Label("");
+		this.add(this.labelDiceValues, 1, 2);
 
 		Pane verticalGap = new Pane();
-		verticalGap.minHeightProperty().bind(lblTitle.heightProperty());
+		verticalGap.minHeightProperty().bind(labelTitle.heightProperty());
 		this.add(verticalGap, 0, 3);
 
-		this.btnRoll = new Button("Roll");
-		this.btnRoll.setOnAction(new TakeTurnListener());
-		this.add(this.btnRoll, 0, 4);
+		this.buttonRoll = new Button("Roll");
+		this.buttonRoll.setOnAction(new TakeTurnListener());
+		this.add(this.buttonRoll, 0, 4);
 
-		this.btnHold = new Button("Hold");
-		this.btnHold.setOnAction(new HoldListener());
-		this.add(this.btnHold, 1, 4);
+		this.buttonHold = new Button("Hold");
+		this.buttonHold.setOnAction(new HoldListener());
+		this.add(this.buttonHold, 1, 4);
 	}
 
 	@Override
@@ -79,8 +79,8 @@ public class HumanPane extends GridPane implements InvalidationListener {
 
 		int turnTotal = this.theHuman.getTurnTotal();
 		String result = this.theHuman.getDiceValues();
-		this.lblDiceValues.setText(result);
-		this.lblTurnTotal.setText("" + turnTotal);
+		this.labelDiceValues.setText(result);
+		this.labelTurnTotal.setText("" + turnTotal);
 
 		this.setDisable(!myTurn);
 
@@ -94,8 +94,8 @@ public class HumanPane extends GridPane implements InvalidationListener {
 	 * Updates the output labels in preparation for a new game
 	 */
 	public void clearInformation() {
-		this.lblDiceValues.setText("");
-		this.lblTurnTotal
+		this.labelDiceValues.setText("");
+		this.labelTurnTotal
 				.setText(Integer.toString(this.theHuman.getTurnTotal()));
 	}
 

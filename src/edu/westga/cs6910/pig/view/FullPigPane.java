@@ -14,12 +14,12 @@ import javafx.scene.layout.VBox;
  */
 public class FullPigPane extends BorderPane {
 	private Game theGame;
-	private BorderPane pnContent;
+	private BorderPane paneContent;
 
-	private HumanPane pnHumanPlayer;
-	private ComputerPane pnComputerPlayer;
-	private StatusPane pnGameInfo;
-	private NewGamePane pnChooseFirstPlayer;
+	private HumanPane paneHumanPlayer;
+	private ComputerPane paneComputerPlayer;
+	private StatusPane paneGameInfo;
+	private NewGamePane paneChooseFirstPlayer;
 	private PigHelpDialog helpDialog;
 	private PigMenuBar menuBar;
 
@@ -44,31 +44,31 @@ public class FullPigPane extends BorderPane {
 	private void buildPane() {
 		this.helpDialog = new PigHelpDialog();
 		this.helpDialog.showHelpDialog();
-		this.pnContent = new BorderPane();
+		this.paneContent = new BorderPane();
 
 		this.menuBar = new PigMenuBar(this.theGame, this, this.helpDialog);
 		VBox menuBox = this.menuBar.createMenu();
 
-		this.pnChooseFirstPlayer = new NewGamePane(this.theGame, this);
-		HBox playerBox = this.createHBoxHolder(this.pnChooseFirstPlayer, false);
+		this.paneChooseFirstPlayer = new NewGamePane(this.theGame, this);
+		HBox playerBox = this.createHBoxHolder(this.paneChooseFirstPlayer, false);
 
 		VBox topBox = new VBox();
 		topBox.getChildren().addAll(menuBox, playerBox);
-		this.pnContent.setTop(topBox);
+		this.paneContent.setTop(topBox);
 
-		this.pnHumanPlayer = new HumanPane(this.theGame);
-		HBox leftBox = this.createHBoxHolder(this.pnHumanPlayer, true);
-		this.pnContent.setLeft(leftBox);
+		this.paneHumanPlayer = new HumanPane(this.theGame);
+		HBox leftBox = this.createHBoxHolder(this.paneHumanPlayer, true);
+		this.paneContent.setLeft(leftBox);
 
-		this.pnComputerPlayer = new ComputerPane(this.theGame);
-		HBox centerBox = this.createHBoxHolder(this.pnComputerPlayer, true);
-		this.pnContent.setCenter(centerBox);
+		this.paneComputerPlayer = new ComputerPane(this.theGame);
+		HBox centerBox = this.createHBoxHolder(this.paneComputerPlayer, true);
+		this.paneContent.setCenter(centerBox);
 
-		this.pnGameInfo = new StatusPane(this.theGame);
-		HBox bottomBox = this.createHBoxHolder(this.pnGameInfo, false);
-		this.pnContent.setBottom(bottomBox);
+		this.paneGameInfo = new StatusPane(this.theGame);
+		HBox bottomBox = this.createHBoxHolder(this.paneGameInfo, false);
+		this.paneContent.setBottom(bottomBox);
 
-		this.setCenter(this.pnContent);
+		this.setCenter(this.paneContent);
 	}
 
 	private HBox createHBoxHolder(Pane newPane, boolean disable) {
@@ -84,55 +84,55 @@ public class FullPigPane extends BorderPane {
 	 * Defines the functions needed to reset the panes
 	 */
 	public void resetPanes() {
-		this.pnChooseFirstPlayer.reset();
-		this.pnChooseFirstPlayer.setDisable(false);
-		this.pnHumanPlayer.setDisable(true);
-		this.pnComputerPlayer.setDisable(true);
+		this.paneChooseFirstPlayer.reset();
+		this.paneChooseFirstPlayer.setDisable(false);
+		this.paneHumanPlayer.setDisable(true);
+		this.paneComputerPlayer.setDisable(true);
 
 		if (this.helpDialog.getShouldShowHelpDialog()) {
 			this.helpDialog.showHelpDialog();
 		}
 
 		this.theGame.resetGame();
-		this.pnGameInfo.clearInformation();
-		this.pnHumanPlayer.clearInformation();
-		this.pnComputerPlayer.clearInformation();
+		this.paneGameInfo.clearInformation();
+		this.paneHumanPlayer.clearInformation();
+		this.paneComputerPlayer.clearInformation();
 	}
 
 	/**
 	 * Updates the status game pane
 	 */
 	public void updateGameInfo() {
-		this.pnGameInfo.update();
+		this.paneGameInfo.update();
 	}
 
 	/**
 	 * Enables or disables the player pane
 	 * 
-	 * @param isDisabled
+	 * @param isPaneDisabled
 	 *            is the pane disabled
 	 */
-	public void showPlayerPane(boolean isDisabled) {
-		this.pnChooseFirstPlayer.setDisable(isDisabled);
+	public void showPlayerPane(boolean isPaneDisabled) {
+		this.paneChooseFirstPlayer.setDisable(isPaneDisabled);
 	}
 
 	/**
 	 * Enables or disables the computer pane
 	 * 
-	 * @param isDisabled
+	 * @param isPaneDisabled
 	 *            is the pane disabled
 	 */
-	public void showComputerPane(boolean isDisabled) {
-		this.pnComputerPlayer.setDisable(isDisabled);
+	public void showComputerPane(boolean isPaneDisabled) {
+		this.paneComputerPlayer.setDisable(isPaneDisabled);
 	}
 
 	/**
 	 * Enables or disables the human pane
 	 * 
-	 * @param isDisabled
+	 * @param isPaneDisabled
 	 *            is the pane disabled
 	 */
-	public void showHumanPane(boolean isDisabled) {
-		this.pnHumanPlayer.setDisable(isDisabled);
+	public void showHumanPane(boolean isPaneDisabled) {
+		this.paneHumanPlayer.setDisable(isPaneDisabled);
 	}
 }

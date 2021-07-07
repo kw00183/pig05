@@ -21,10 +21,10 @@ import javafx.scene.layout.Pane;
  */
 public class ComputerPane extends GridPane implements InvalidationListener {
 	private Game theGame;
-	private Label lblTurnTotal;
-	private Label lblDiceValues;
+	private Label labelTurnTotal;
+	private Label labelDiceValues;
 	private ComputerPlayer theComputer;
-	private Button btnTakeTurn;
+	private Button buttonTakeTurn;
 
 	/**
 	 * Creates a new ComputerPane that observes the specified game.
@@ -48,26 +48,26 @@ public class ComputerPane extends GridPane implements InvalidationListener {
 	}
 
 	private void buildPane() {
-		Label lblTitle = new Label("~~ " + this.theComputer.getName() + " ~~");
-		this.add(lblTitle, 0, 0);
+		Label labelTitle = new Label("~~ " + this.theComputer.getName() + " ~~");
+		this.add(labelTitle, 0, 0);
 
-		this.btnTakeTurn = new Button("Take Turn");
-		this.btnTakeTurn.setOnAction(new TakeTurnListener());
-		this.add(this.btnTakeTurn, 0, 1);
+		this.buttonTakeTurn = new Button("Take Turn");
+		this.buttonTakeTurn.setOnAction(new TakeTurnListener());
+		this.add(this.buttonTakeTurn, 0, 1);
 
 		Pane verticalGap = new Pane();
-		verticalGap.minHeightProperty().bind(lblTitle.heightProperty());
+		verticalGap.minHeightProperty().bind(labelTitle.heightProperty());
 		this.add(verticalGap, 0, 2);
 
 		this.add(new Label("Turn Total: "), 0, 3);
-		this.lblTurnTotal = new Label("0");
-		this.add(this.lblTurnTotal, 1, 3);
+		this.labelTurnTotal = new Label("0");
+		this.add(this.labelTurnTotal, 1, 3);
 
-		Label lblDiceValuesHeader = new Label("Dice Values");
-		this.add(lblDiceValuesHeader, 0, 4);
-		GridPane.setValignment(lblDiceValuesHeader, VPos.TOP);
-		this.lblDiceValues = new Label("");
-		this.add(this.lblDiceValues, 1, 4);
+		Label labelDiceValuesHeader = new Label("Dice Values");
+		this.add(labelDiceValuesHeader, 0, 4);
+		GridPane.setValignment(labelDiceValuesHeader, VPos.TOP);
+		this.labelDiceValues = new Label("");
+		this.add(this.labelDiceValues, 1, 4);
 	}
 
 	@Override
@@ -97,21 +97,21 @@ public class ComputerPane extends GridPane implements InvalidationListener {
 		if (this.theComputer.getRolledOne()) {
 			turnTotal = 0;
 		}
-		this.lblTurnTotal.setText("" + turnTotal);
+		this.labelTurnTotal.setText("" + turnTotal);
 
 		String result = "";
 		for (String current : this.theComputer.getRollsInTurn()) {
 			result += current + "\n";
 		}
-		this.lblDiceValues.setText(result);
+		this.labelDiceValues.setText(result);
 	}
 
 	/**
 	 * Updates the output labels in preparation for a new game
 	 */
 	public void clearInformation() {
-		this.lblTurnTotal.setText("0");
-		this.lblDiceValues.setText("");
+		this.labelTurnTotal.setText("0");
+		this.labelDiceValues.setText("");
 	}
 
 	/**

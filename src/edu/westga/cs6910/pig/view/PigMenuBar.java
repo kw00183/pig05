@@ -57,133 +57,133 @@ public class PigMenuBar {
 	/**
 	 * Builds the vertical box that holds the menu items
 	 * 
-	 * @return vbxMenuHolder the vertical box holding the menu items
+	 * @return vBoxMenuHolder the vertical box holding the menu items
 	 */
 	public VBox createMenu() {
-		VBox vbxMenuHolder = new VBox();
+		VBox vBoxMenuHolder = new VBox();
 
-		MenuBar mnuMain = new MenuBar();
+		MenuBar menuMain = new MenuBar();
 
-		Menu mnuFile = this.createGameMenu();
+		Menu menuFile = this.createGameMenu();
 
-		Menu mnuSettings = this.createStrategyMenu();
+		Menu menuSettings = this.createStrategyMenu();
 
-		Menu mnuHelp = this.createHelpMenu();
+		Menu menuHelp = this.createHelpMenu();
 
-		mnuMain.getMenus().addAll(mnuFile, mnuSettings, mnuHelp);
-		vbxMenuHolder.getChildren().addAll(mnuMain);
-		return vbxMenuHolder;
+		menuMain.getMenus().addAll(menuFile, menuSettings, menuHelp);
+		vBoxMenuHolder.getChildren().addAll(menuMain);
+		return vBoxMenuHolder;
 	}
 
 	/**
 	 * Defines the computer strategy menu items of cautious, greedy and random
 	 * 
-	 * @return mnuSettings the menu object containing the strategy menu items
+	 * @return menuSettings the menu object containing the strategy menu items
 	 */
 	private Menu createStrategyMenu() {
-		Menu mnuSettings = new Menu("_Strategy");
-		mnuSettings.setMnemonicParsing(true);
+		Menu menuSettings = new Menu("_Strategy");
+		menuSettings.setMnemonicParsing(true);
 
-		ToggleGroup tglStrategy = new ToggleGroup();
+		ToggleGroup toggleStrategy = new ToggleGroup();
 
-		RadioMenuItem mnuCautious = this.addStrategyItem("_Cautious", KeyCode.C,
+		RadioMenuItem menuCautious = this.addStrategyItem("_Cautious", KeyCode.C,
 				"cautious");
-		mnuCautious.setToggleGroup(tglStrategy);
+		menuCautious.setToggleGroup(toggleStrategy);
 
-		RadioMenuItem mnuGreedy = this.addStrategyItem("Gr_eedy", KeyCode.E,
+		RadioMenuItem menuGreedy = this.addStrategyItem("Gr_eedy", KeyCode.E,
 				"greedy");
-		mnuGreedy.setToggleGroup(tglStrategy);
+		menuGreedy.setToggleGroup(toggleStrategy);
 
-		RadioMenuItem mnuRandom = this.addStrategyItem("_Random", KeyCode.R,
+		RadioMenuItem menuRandom = this.addStrategyItem("_Random", KeyCode.R,
 				"random");
-		mnuRandom.setToggleGroup(tglStrategy);
+		menuRandom.setToggleGroup(toggleStrategy);
 
 		PigStrategy currentStrategy = this.theGame.getComputerPlayer()
 				.getStrategy();
 		if (currentStrategy.getClass() == CautiousStrategy.class) {
-			mnuCautious.setSelected(true);
+			menuCautious.setSelected(true);
 		} else if (currentStrategy.getClass() == RandomStrategy.class) {
-			mnuRandom.setSelected(true);
+			menuRandom.setSelected(true);
 		} else {
-			mnuGreedy.setSelected(true);
+			menuGreedy.setSelected(true);
 		}
 
-		mnuSettings.getItems().addAll(mnuCautious, mnuGreedy, mnuRandom);
-		return mnuSettings;
+		menuSettings.getItems().addAll(menuCautious, menuGreedy, menuRandom);
+		return menuSettings;
 	}
 
 	/**
 	 * Defines the radio menu items of the computer strategy for cautious,
 	 * greedy and random
 	 * 
-	 * @return mnuStrategy the radio menu items for the strategies
+	 * @return menuStrategy the radio menu items for the strategies
 	 */
 	private RadioMenuItem addStrategyItem(String menuText, KeyCode key,
 			String strategy) {
-		RadioMenuItem mnuStrategy = new RadioMenuItem(menuText);
-		mnuStrategy.setAccelerator(
+		RadioMenuItem menuStrategy = new RadioMenuItem(menuText);
+		menuStrategy.setAccelerator(
 				new KeyCodeCombination(key, KeyCombination.SHORTCUT_DOWN));
 
 		if (strategy.equals("cautious")) {
-			mnuStrategy.setOnAction(new CautiousStrategyListener());
+			menuStrategy.setOnAction(new CautiousStrategyListener());
 		} else if (strategy.equals("random")) {
-			mnuStrategy.setOnAction(new RandomStrategyListener());
+			menuStrategy.setOnAction(new RandomStrategyListener());
 		} else {
-			mnuStrategy.setOnAction(new GreedyStrategyListener());
+			menuStrategy.setOnAction(new GreedyStrategyListener());
 		}
-		mnuStrategy.setMnemonicParsing(true);
-		return mnuStrategy;
+		menuStrategy.setMnemonicParsing(true);
+		return menuStrategy;
 	}
 
 	/**
 	 * Defines the game menu with options to start new game or exit application
 	 * 
-	 * @return mnuGame the game menu
+	 * @return menuGame the game menu
 	 */
 	private Menu createGameMenu() {
-		Menu mnuGame = new Menu("_Game");
-		mnuGame.setMnemonicParsing(true);
+		Menu menuGame = new Menu("_Game");
+		menuGame.setMnemonicParsing(true);
 
-		MenuItem mnuNew = new MenuItem("_New");
-		mnuNew.setMnemonicParsing(true);
-		mnuNew.setAccelerator(new KeyCodeCombination(KeyCode.N,
+		MenuItem menuNew = new MenuItem("_New");
+		menuNew.setMnemonicParsing(true);
+		menuNew.setAccelerator(new KeyCodeCombination(KeyCode.N,
 				KeyCombination.SHORTCUT_DOWN));
-		mnuNew.setOnAction(new NewGameListener());
+		menuNew.setOnAction(new NewGameListener());
 
-		MenuItem mnuExit = new MenuItem("E_xit");
-		mnuExit.setMnemonicParsing(true);
-		mnuExit.setAccelerator(new KeyCodeCombination(KeyCode.X,
+		MenuItem menuExit = new MenuItem("E_xit");
+		menuExit.setMnemonicParsing(true);
+		menuExit.setAccelerator(new KeyCodeCombination(KeyCode.X,
 				KeyCombination.SHORTCUT_DOWN));
-		mnuExit.setOnAction(event -> System.exit(0));
+		menuExit.setOnAction(event -> System.exit(0));
 
-		mnuGame.getItems().addAll(mnuNew, mnuExit);
-		return mnuGame;
+		menuGame.getItems().addAll(menuNew, menuExit);
+		return menuGame;
 	}
 
 	/**
 	 * Defines the help menu with options to show the help content or about
 	 * information
 	 * 
-	 * @return mnuHelp the help menu
+	 * @return menuHelp the help menu
 	 */
 	private Menu createHelpMenu() {
-		Menu mnuHelp = new Menu("_Help");
-		mnuHelp.setMnemonicParsing(true);
+		Menu menuHelp = new Menu("_Help");
+		menuHelp.setMnemonicParsing(true);
 
-		MenuItem mnuHelpContent = new MenuItem("Hel_p Contents");
-		mnuHelpContent.setMnemonicParsing(true);
-		mnuHelpContent.setAccelerator(new KeyCodeCombination(KeyCode.P,
+		MenuItem menuHelpContent = new MenuItem("Hel_p Contents");
+		menuHelpContent.setMnemonicParsing(true);
+		menuHelpContent.setAccelerator(new KeyCodeCombination(KeyCode.P,
 				KeyCombination.SHORTCUT_DOWN));
-		mnuHelpContent.setOnAction(new HelpContentsListener());
+		menuHelpContent.setOnAction(new HelpContentsListener());
 
-		MenuItem mnuAbout = new MenuItem("_About");
-		mnuAbout.setMnemonicParsing(true);
-		mnuAbout.setAccelerator(new KeyCodeCombination(KeyCode.A,
+		MenuItem menuAbout = new MenuItem("_About");
+		menuAbout.setMnemonicParsing(true);
+		menuAbout.setAccelerator(new KeyCodeCombination(KeyCode.A,
 				KeyCombination.SHORTCUT_DOWN));
-		mnuAbout.setOnAction(new HelpAboutListener());
+		menuAbout.setOnAction(new HelpAboutListener());
 
-		mnuHelp.getItems().addAll(mnuHelpContent, mnuAbout);
-		return mnuHelp;
+		menuHelp.getItems().addAll(menuHelpContent, menuAbout);
+		return menuHelp;
 	}
 
 	/*
@@ -268,10 +268,10 @@ public class PigMenuBar {
 		public void handle(ActionEvent event) {
 			String aboutContent = "Creation Date: July 5, 2021\n"
 					+ "Authors: cs6910, Kim Weible";
-			Alert aboutMessage = new Alert(AlertType.NONE, aboutContent,
+			Alert aboutAlert = new Alert(AlertType.NONE, aboutContent,
 					ButtonType.OK);
-			aboutMessage.setTitle("About");
-			aboutMessage.show();
+			aboutAlert.setTitle("About");
+			aboutAlert.show();
 		}
 	}
 }

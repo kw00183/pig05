@@ -71,13 +71,13 @@ public class PigHelpDialog {
 		message.setContentText(
 				"Would you like to see this dialog at the start of the next game?");
 
-		ButtonType btnYes = new ButtonType("Yes");
-		ButtonType btnNo = new ButtonType("No");
-		message.getButtonTypes().setAll(btnYes, btnNo);
+		ButtonType buttonYes = new ButtonType("Yes");
+		ButtonType buttonNo = new ButtonType("No");
+		message.getButtonTypes().setAll(buttonYes, buttonNo);
 
 		Optional<ButtonType> result = message.showAndWait();
 
-		if (result.get() == btnYes) {
+		if (result.get() == buttonYes) {
 			this.setShouldShowHelpDialog(true);
 		} else {
 			this.setShouldShowHelpDialog(false);

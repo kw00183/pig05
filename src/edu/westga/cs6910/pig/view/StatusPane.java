@@ -16,7 +16,7 @@ import javafx.scene.layout.GridPane;
  */
 public class StatusPane extends GridPane implements InvalidationListener {
 	private Game theGame;
-	private Label lblStatus;
+	private Label labelStatus;
 	
 	/**
 	 * Creates a new status pane that observes the specified game. 
@@ -39,8 +39,8 @@ public class StatusPane extends GridPane implements InvalidationListener {
 	private void buildPane() {
 		this.add(new Label("~~ Game Info ~~"), 0, 0);
 		
-		this.lblStatus = new Label(this.theGame.toString());
-		this.add(this.lblStatus, 0, 1);
+		this.labelStatus = new Label(this.theGame.toString());
+		this.add(this.labelStatus, 0, 1);
 	}
 
 	@Override
@@ -52,13 +52,13 @@ public class StatusPane extends GridPane implements InvalidationListener {
 	 * Signals the pane to update its information
 	 */
 	public void update() {
-		this.lblStatus.setText(this.theGame.toString());
+		this.labelStatus.setText(this.theGame.toString());
 	}
 
 	/**
 	 * Updates the output labels in preparation for a new game
 	 */
 	public void clearInformation() {		
-		this.lblStatus.setText(this.theGame.toString());
+		this.labelStatus.setText(this.theGame.toString());
 	}
 }
